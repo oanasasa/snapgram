@@ -6,14 +6,5 @@ export const SignupValidationSchema = z.object({
     email: z.string().email(),
     password: z
         .string()
-        .refine(
-            (val) =>
-                /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
-                    val
-                ),
-            {
-                message:
-                    "Password must be at least 8 characters long and contain at least one uppercase character, one lowercase character, and one special symbol",
-            }
-        ),
+        .min(8, {message: "Password should be at least 8 characters"}),
 });
