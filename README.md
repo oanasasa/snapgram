@@ -1,3 +1,12 @@
+# What it's used inside the project
+
+- React JS (with TypeScript and Vite),
+- Appwrite
+- Tailwind CSS
+- Tailwindcss Animate
+- Shadcn/ui css library
+- React query
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
