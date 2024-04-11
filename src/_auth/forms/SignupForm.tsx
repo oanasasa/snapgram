@@ -15,7 +15,10 @@ import { useForm } from "react-hook-form";
 import { SignupValidationSchema } from "@/lib/validation";
 import Loader from "../../components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
-import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
+import {
+    useCreateUserAccount,
+    useSignInAccount,
+} from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
@@ -23,8 +26,10 @@ const SignupForm = () => {
     const navigate = useNavigate();
     const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
-    const {mutateAsync: createUserAccount, isPending : isCreatingUser} = useCreateUserAccount();
-    const { mutateAsync: signInAccount, isPending: isSigninIn } = useSignInAccount();
+    const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
+        useCreateUserAccount();
+    const { mutateAsync: signInAccount, isPending: isSigninIn } =
+        useSignInAccount();
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof SignupValidationSchema>>({
@@ -46,11 +51,11 @@ const SignupForm = () => {
             return toast({
                 title: "Sign up failed. Please try again!",
             });
-        } 
-        
+        }
+
         const session = await signInAccount({
             email: values.email,
-            password: values.password
+            password: values.password,
         });
 
         if (!session) {
@@ -63,7 +68,7 @@ const SignupForm = () => {
 
         if (isLoggedIn) {
             form.reset();
-            navigate('/');
+            navigate("/");
         } else {
             return toast({
                 title: "Sign up failed. Please try again!",

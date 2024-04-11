@@ -38,7 +38,7 @@ const SigninForm = () => {
     async function onSubmit(values: z.infer<typeof SigninValidationSchema>) {
         const session = await signInAccount({
             email: values.email,
-            password: values.password
+            password: values.password,
         });
 
         if (!session) {
@@ -48,10 +48,10 @@ const SigninForm = () => {
         }
 
         const isLoggedIn = await checkAuthUser();
-      
+
         if (isLoggedIn) {
-          form.reset();
-            navigate('/');
+            form.reset();
+            navigate("/");
         } else {
             return toast({
                 title: "Sign up failed. Please try again!",
