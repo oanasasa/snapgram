@@ -1,14 +1,8 @@
 import { ID, Query } from "appwrite";
 
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-import { errorUtil } from "node_modules/zod/lib/helpers/errorUtil";
+import { INewPost, INewUser } from "@/types";
 
-// ============================================================
-// AUTH
-// ============================================================
-
-// ============================== SIGN UP
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(
@@ -37,7 +31,6 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-// ============================== SAVE USER TO DB
 export async function saveUserToDB(user: {
   accountId: string;
   email: string;
@@ -52,14 +45,12 @@ export async function saveUserToDB(user: {
       ID.unique(),
       user
     );
-
     return newUser;
   } catch (error) {
     console.log(error);
   }
 }
 
-// ============================== SIGN IN
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
@@ -70,22 +61,19 @@ export async function signInAccount(user: { email: string; password: string }) {
   }
 }
 
-// ============================== GET ACCOUNT
-export async function getAccount() {
+export async function signOutAccount() {
   try {
-    const currentAccount = await account.get();
+    const session = await account.deleteSession("current");
 
-    return currentAccount;
+    return session;
   } catch (error) {
     console.log(error);
   }
 }
 
-// ============================== GET USER
 export async function getCurrentUser() {
   try {
-    const currentAccount = await getAccount();
-
+    const currentAccount = await account.get();
     if (!currentAccount) throw Error;
 
     const currentUser = await databases.listDocuments(
@@ -103,16 +91,6 @@ export async function getCurrentUser() {
   }
 }
 
-export async function signOutAccount() {
-  try {
-    const session = await account.deleteSession("current");
-
-    return session;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export async function createPost(post: INewPost) {
   try {
     //UPLOAD image to storage
@@ -124,12 +102,12 @@ export async function createPost(post: INewPost) {
     const fileUrl = getFilePreview(uploadedFile.$id);
 
     if (!fileUrl) {
-      deleteFile(uploadedFile.$id);
+      await deleteFile(uploadedFile.$id);
       throw Error;
     }
 
     //Convert tags into an array
-    const tags = post.tags?.replace(/ /g, "").split(",");
+    const tags = post.tags?.replace(/ /g, "").split(",") || [];
 
     //Save new post to database
     const newPost = await databases.createDocument(
@@ -171,7 +149,7 @@ export async function uploadFile(file: File) {
   }
 }
 
-export async function getFilePreview(fileId: string) {
+export function getFilePreview(fileId: string) {
   try {
     const fileUrl = storage.getFilePreview(
       appwriteConfig.storageId,
@@ -182,6 +160,8 @@ export async function getFilePreview(fileId: string) {
       100
     );
 
+    if (!fileUrl) throw Error;
+
     return fileUrl;
   } catch (error) {
     console.log(error);
@@ -191,6 +171,73 @@ export async function getFilePreview(fileId: string) {
 export async function deleteFile(fileId: string) {
   try {
     await storage.deleteFile(appwriteConfig.storageId, fileId);
+
+    return { status: "ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getRecentPosts() {
+  const posts = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.postCollectionId,
+    [Query.orderDesc("$createdAt"), Query.limit(20)]
+  );
+
+  if (!posts) throw Error;
+
+  return posts;
+}
+
+export async function likePost(postId: string, likesArray: string[]) {
+  try {
+    const updatedPost = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId,
+      {
+        likes: likesArray,
+      }
+    );
+
+    if (!updatedPost) throw Error;
+
+    return updatedPost;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function savePost(postId: string, userId: string) {
+  try {
+    const updatedPost = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      ID.unique(),
+      {
+        user: userId,
+        post: postId,
+      }
+    );
+
+    if (!updatedPost) throw Error;
+
+    return updatedPost;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteSavedPost(savedRecordId: string) {
+  try {
+    const satusCode = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      savedRecordId
+    );
+
+    if (!satusCode) throw Error;
 
     return { status: "ok" };
   } catch (error) {
