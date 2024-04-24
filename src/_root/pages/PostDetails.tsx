@@ -1,3 +1,4 @@
+import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetPostById } from "@/lib/react-query/queriesAndMutations";
@@ -36,8 +37,8 @@ const PostDetails = () => {
                                     </p>
                                     <div className="flex-center gap-2 text-light-3">
                                         <p className="subtle-semibold lg:small-regular">
-                                            {formatDate(post?.$createdAt)}
-                                        </p>
+                                            {formatDate(post?.$createdAt || '')}
+                                        </p> 
                                         -
                                         <p className="subtle-semibold lg:small-regular">
                                             {post?.location}
@@ -58,14 +59,16 @@ const PostDetails = () => {
                         <div className="flex flex-col flex-1 w-full small-medium lg:base-regular">
                             <p>{post?.caption}</p>
                             <ul className="flex gap-1 mt-2">
-                                {post?.tags.map((tag: String) => (
+                                {post?.tags.map((tag: string) => (
                                 <li key={tag} className="text-light-3">
                                     #{tag}
                                 </li>
                                 ))}
                             </ul>
                         </div>
-                        <div className="w-full"></div>
+                        <div className="w-full">
+                            <PostStats post={post} userId={user.id}/>
+                        </div>
                     </div>
                 </div>
             )}
