@@ -36,8 +36,6 @@ const Explore = () => {
     );
   }
 
-  console.log(posts);
-
   return (
     <div className="explore-container">
       <div className="explore-inner_container">
