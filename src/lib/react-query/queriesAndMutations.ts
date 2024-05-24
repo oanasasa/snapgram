@@ -21,6 +21,7 @@ import {
   getInfinitePosts,
   searchPosts,
   getAllUsers,
+  getUserById,
 } from "@/lib/appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -213,5 +214,13 @@ export const useGetUsers = () => {
       return lastId;
     },
     initialPageParam: undefined,
+  });
+};
+
+export const useGetUserById = (userId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USER_BY_ID, userId],
+    queryFn: () => getUserById(userId),
+    enabled: !!userId,
   });
 };

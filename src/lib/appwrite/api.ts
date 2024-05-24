@@ -387,3 +387,17 @@ export async function getAllUsers({pageParam} : {pageParam:number})
     console.log(error);
   }
 }
+
+export async function getUserById(userId: string){
+  try {
+    const user = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      userId
+    )
+
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
