@@ -22,3 +22,11 @@ export const PostValidationSchema = z.object({
   location: z.string().min(2).max(100),
   tags: z.string(),
 });
+
+export const UserValidationSchema = z.object({
+  file: z.custom<File[]>(),
+  name: z.string().min(2).max(100),
+  username: z.string(),
+  email: z.string().email(),
+  bio: z.string().min(2).max(100),
+});
