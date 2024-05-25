@@ -1,10 +1,6 @@
-import PostForm from "@/components/forms/PostForm";
 import ProfileForm from "@/components/forms/ProfileForm";
 import Loader from "@/components/shared/Loader";
-import {
-  useGetPostById,
-  useGetUserById,
-} from "@/lib/react-query/queriesAndMutations";
+import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import { useParams } from "react-router-dom";
 
 const UpdateProfile = () => {

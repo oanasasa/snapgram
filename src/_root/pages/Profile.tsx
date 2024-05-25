@@ -1,10 +1,7 @@
 // import PostForm from "@/components/forms/PostForm";
 import Loader from "@/components/shared/Loader";
-import { Button } from "@/components/ui/button";
-import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { formatDate } from "@/lib/utils";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const { id } = useParams();
@@ -14,7 +11,7 @@ const Profile = () => {
 
   // const {User} = useUserContext();
 
-  const handleDeletePost = () => {};
+  // const handleDeletePost = () => {};
   return (
     <div className="profile-container">
       {isPending ? (
