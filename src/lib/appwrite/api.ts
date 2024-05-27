@@ -385,6 +385,20 @@ export async function getAllUsers({ pageParam }: { pageParam: number }) {
   }
 }
 
+export async function getUsers(limit?: number) {
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.orderDesc("$createdAt"), Query.limit(limit ? limit : 5)]
+    );
+
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getUserById(userId: string) {
   try {
     const user = await databases.getDocument(

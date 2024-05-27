@@ -20,9 +20,9 @@ import {
   deletePost,
   getInfinitePosts,
   searchPosts,
-  getAllUsers,
   getUserById,
   updateUser,
+  getUsers,
 } from "@/lib/appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -202,19 +202,10 @@ export const useSearchPost = (searchTerm: string) => {
   });
 };
 
-export const useGetUsers = () => {
-  return useInfiniteQuery({
-    queryKey: [QUERY_KEYS.GET_USERS],
-    queryFn: getAllUsers,
-    getNextPageParam: (lastPage: any) => {
-      if (lastPage && lastPage?.documents.length === 0) {
-        return null;
-      }
-
-      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
-      return lastId;
-    },
-    initialPageParam: undefined,
+export const useGetUsers = (limit?: number) => {
+  return useQuery({
+    queryKey: ["getUsers"],
+    queryFn: () => getUsers(limit),
   });
 };
 

@@ -1,35 +1,35 @@
 import { Models } from "appwrite";
 import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 type GridUserListProps = {
   users?: Models.Document[];
 };
+
 const GridUserList = ({ users }: GridUserListProps) => {
   return (
-    <ul className="user-grid">
-      {users?.map((user) => (
-        <Link to={`/profile/${user.$id}`}>
-          <li key={user.$id} className="user-box">
-            <img
-              src={user.imageUrl}
-              alt="avatar"
-              className="object-cover rounded-full"
-              width={100}
-              height={100}
-            />
-            <p>{user.name}</p>
-            <p className="subtle-semibold lg:small-regular text-light-3">
-              {user.username}
-            </p>
-            <p
-              className={`${user.bio ? "user-bio" : "hidden"} lg:small-regular`}
-            >
-              {user.bio}
-            </p>
-          </li>
-        </Link>
-      ))}
-    </ul>
+    <div className="@container w-full">
+      <ul className="user-grid">
+        {users?.map((user) => (
+          <Link key={user.$id} to={`/profile/${user.$id}`}>
+            <li className="user-box">
+              <img
+                src={user.imageUrl}
+                alt="avatar"
+                className="object-cover rounded-full w-14 h-14 @lg:w-24 @lg:h-24"
+              />
+              <h3 className="body-medium @lg:h3-semibold">{user.name}</h3>
+              <p className="subtle-semibold lg:small-regular text-light-3 mb-2">
+                {user.username}
+              </p>
+              <Button className="shad-button_primary @lg:px-8 px-5">
+                Follow
+              </Button>
+            </li>
+          </Link>
+        ))}
+      </ul>
+    </div>
   );
 };
 
