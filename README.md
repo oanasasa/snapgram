@@ -19,36 +19,69 @@ Social media web app made with React, Typescript and Vite.
 -   `npx tailwindcss init`
 -   `npm i -D tailwindcss-animate`
 -   `npm i @tailwindcss/container-queries`
--   `npm install -D tailwindcss postcss autoprefixer`
--   `npx tailwindcss init -p`
 -   `npm i @tanstack/react-query`
 
+# Install Shadcn/ui css library
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. Create project
+2. Add Tailwind and its configuration
+    `npm install -D tailwindcss postcss autoprefixer`
+    `npx tailwindcss init -p`
+3. Edit tsconfig.json file
+    `{
+        "compilerOptions": {
+            // ...
+            "baseUrl": ".",
+            "paths": {
+              "@/*": [
+                "./src/*"
+              ]
+            }
+            // ...
+        }
+    }`
+4. Update vite.config.ts
+   Terminal
+   `npm i -D @types/node`
 
-Currently, two official plugins are available:
+   Vite.config.ts file
+   `import path from "path"
+    import react from "@vitejs/plugin-react"
+    import { defineConfig } from "vite"`
+     
+   `export default defineConfig({
+      plugins: [react()],
+      resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "./src"),
+        },
+      },
+    })`
 
--   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
--   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+5. Run the CLI
+    `npx shadcn-ui@latest init`
 
-## Expanding the ESLint configuration
+6. Configure components.json
+    `Would you like to use TypeScript (recommended)? no / yes
+    Which style would you like to use? › Default
+    Which color would you like to use as base color? › Slate
+    Where is your global CSS file? › › src/index.css
+    Do you want to use CSS variables for colors? › no / yes
+    Where is your tailwind.config.js located? › tailwind.config.js
+    Configure the import alias for components: › @/components
+    Configure the import alias for utils: › @/lib/utils
+    Are you using React Server Components? › no / yes (no)`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+7. That's it
+    `npx shadcn-ui@latest add button`
 
--   Configure the top-level `parserOptions` property like this:
+   `**import { Button } from "@/components/ui/button**"
+    export default function Home() {
+      return (
+        <div>
+          **<Button>Click me</Button>**
+        </div>
+      )
+    }`
 
-```js
-export default {
-    // other rules...
-    parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        project: ["./tsconfig.json", "./tsconfig.node.json"],
-        tsconfigRootDir: __dirname,
-    },
-};
-```
-
--   Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
--   Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
--   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+   
