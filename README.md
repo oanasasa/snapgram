@@ -1,4 +1,8 @@
-# What it's used inside the project
+# About the project
+
+Social media web app made with React, Typescript and Vite.
+
+# What is used inside the project
 
 -   React JS (with TypeScript and Vite),
 -   Appwrite
@@ -8,19 +12,16 @@
 -   Shadcn/ui css library
 -   React query
 
-# React + TypeScript + Vite
-
-
 # NPM packages
 
--   npm i appwrite --save
--   npm install -D tailwindcss
--   npx tailwindcss init
--   npm i -D tailwindcss-animate
--   npm i @tailwindcss/container-queries
--   npm install -D tailwindcss postcss autoprefixer
--   npx tailwindcss init -p
--   npm i @tanstack/react-query
+-   `npm i appwrite --save`
+-   `npm install -D tailwindcss`
+-   `npx tailwindcss init`
+-   `npm i -D tailwindcss-animate`
+-   `npm i @tailwindcss/container-queries`
+-   `npm install -D tailwindcss postcss autoprefixer`
+-   `npx tailwindcss init -p`
+-   `npm i @tanstack/react-query`
 
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
