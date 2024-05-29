@@ -3,11 +3,7 @@ import Loader from "@/components/shared/Loader";
 import GridUserList from "@/components/shared/GridUserList";
 
 const AllUsers = () => {
-  const {
-    data: creators,
-    isLoading: isUserLoading,
-    isError: isErrorCreators,
-  } = useGetUsers(10);
+  const { data: creators, isLoading: isUserLoading } = useGetUsers(10);
 
   if (!creators) {
     return (
@@ -19,8 +15,17 @@ const AllUsers = () => {
 
   return (
     <div className="user-container">
-      <div className="flex-between w-full max-w-5xl mt-16 mb-7">
-        <h3 className="lg:h2-bold h3-bold w-full">All users</h3>
+      <div className="flex-between w-full max-w-5xl mb-7">
+        <h2 className="h3-bold md:h2-bold w-full flex gap-3">
+          <img
+            src="/assets/icons/people.svg"
+            width={30}
+            height={30}
+            alt="people"
+            className="invert-white"
+          />
+          All users
+        </h2>
       </div>
 
       <div className="flex flex-wrap gap-5 w-full max-w-5xl">

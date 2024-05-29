@@ -245,7 +245,7 @@
 
   /*Creators Sidebar*/
   .creators-sidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[450px] bg-dark-2;
+    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] lg:min-w-[450px] bg-dark-2;
   }
 
   .creators-sidebarlink {
