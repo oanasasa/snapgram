@@ -1,21 +1,26 @@
+import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
 
-import { useUserContext } from "@/context/AuthContext";
+import { useGetCurrentUser } from "@/lib/react-query/queriesAndMutations";
+import { Models } from "appwrite";
 
 const Saved = () => {
-  const { user } = useUserContext();
+  const { data: currentUser } = useGetCurrentUser();
 
-  if (!user) {
-    return (
-      <div className="flex-center w-full h-full">
-        <Loader />
-      </div>
-    );
-  }
+  const savedPosts = currentUser?.save
+    .map((savedPost: Models.Document) => ({
+      ...savedPost.post,
+      creator: {
+        imageUrl: currentUser.imageUrl,
+      },
+    }))
+    .reverse();
+
+  console.log(savedPosts);
 
   return (
-    <div className="user-container">
-      <div className="flex-between w-full max-w-5xl mb-7">
+    <div className="saved-container">
+      <div className="flex gap-2 w-full max-w-5xl">
         <h2 className="h3-bold md:h2-bold w-full flex gap-3">
           <img
             src="/assets/icons/saved.svg"
@@ -27,6 +32,18 @@ const Saved = () => {
           Saved Posts
         </h2>
       </div>
+
+      {!currentUser ? (
+        <Loader />
+      ) : (
+        <ul>
+          {savedPosts.length === 0 ? (
+            <p className="text-light-4">No available posts</p>
+          ) : (
+            <GridPostList posts={savedPosts} showStats={false} />
+          )}
+        </ul>
+      )}
     </div>
   );
 };

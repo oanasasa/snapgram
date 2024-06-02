@@ -1,6 +1,5 @@
 import { Models } from "appwrite";
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
 
 type GridUserListProps = {
   users?: Models.Document[];
@@ -22,9 +21,6 @@ const GridUserList = ({ users }: GridUserListProps) => {
               <p className="subtle-semibold lg:small-regular text-light-3 mb-2">
                 {user.username}
               </p>
-              <Button className="shad-button_primary @lg:px-8 px-5">
-                Follow
-              </Button>
             </li>
           </Link>
         ))}
