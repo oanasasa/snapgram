@@ -35,8 +35,8 @@ const AvatarUploader = ({ fieldChange, mediaUrl }: AvatarUploaderProps) => {
           <div className="flex items-center gap-4 lg:gap-8 justify-st w-full">
             <img
               src={fileUrl}
-              alt="image"
-              className="rounded-full cursor-pointer"
+              alt="avatar"
+              className="rounded-full cursor-pointer object-cover aspect-square"
               width={100}
               height={100}
             />
