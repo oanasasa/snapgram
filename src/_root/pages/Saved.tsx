@@ -1,6 +1,5 @@
 import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
-
 import { useGetCurrentUser } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
 
@@ -15,8 +14,6 @@ const Saved = () => {
       },
     }))
     .reverse();
-
-  console.log(savedPosts);
 
   return (
     <div className="saved-container">
@@ -36,7 +33,7 @@ const Saved = () => {
       {!currentUser ? (
         <Loader />
       ) : (
-        <ul>
+        <ul className="w-full flex justify-center max-w-5xl gap-9">
           {savedPosts.length === 0 ? (
             <p className="text-light-4">No available posts</p>
           ) : (
@@ -47,5 +44,4 @@ const Saved = () => {
     </div>
   );
 };
-
 export default Saved;

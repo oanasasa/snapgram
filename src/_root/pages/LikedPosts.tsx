@@ -12,6 +12,7 @@ const LikedPosts = () => {
       </div>
     );
 
+  console.log(currentUser.liked);
   return (
     <>
       {currentUser.liked.length === 0 && (
